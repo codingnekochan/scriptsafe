@@ -48,8 +48,8 @@ const PrescriptionVerificationScreen = () => {
                             </View>
                         </LinearGradient>
                     </View>
-                    <View className='flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] gap-3 rounded border border-[#4CBB5E21] mb-4'>
-                        <View>
+                    <View className='flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4'>
+                        <View className='w-4/6 flex-grow'>
                             <Text className='font-boldSFDisplay text-sm text-[#151515]'>
                                 Duration Check
                             </Text>
@@ -66,16 +66,15 @@ const PrescriptionVerificationScreen = () => {
                             </Text>
                         </View>
                     </View>
-                    <View className='flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] gap-3 rounded border border-[#4CBB5E21] mb-4'>
-                        <View>
+                    <View className='flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4'>
+                        <View className='w-4/6 flex-grow'>
                             <Text className='font-boldSFDisplay text-sm text-[#151515]'>
                                 Dosage Check
                             </Text>
                             <Text className='font-regularSFDisplay text-sm text-[#151515]'>
                                 Prescribed dosage: 1,000mg/day</Text>
                             <Text className='font-regularSFDisplay text-sm text-[#151515]'>
-                                Recommended range: 750–1,500mg/day for adults
-                            </Text>
+                              Recommended range: 750–1,500mg/day for adults                            </Text>
                         </View>
                         <View className='border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]'>
                             <Text className='font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]'>
@@ -83,8 +82,8 @@ const PrescriptionVerificationScreen = () => {
                             </Text>
                         </View>
                     </View>
-                    <View className='flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] gap-3 rounded border border-[#4CBB5E21] mb-4'>
-                        <View>
+                    <View className='flex-row flex-grow flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4'>
+                        <View className='w-4/6 flex-grow'>
                             <Text className='font-boldSFDisplay text-sm text-[#151515]'>
                                 Drug-Drug Interactions
                             </Text>
@@ -98,8 +97,8 @@ const PrescriptionVerificationScreen = () => {
                             </Text>
                         </View>
                     </View>
-                    <View className='flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] gap-3 rounded border border-[#4CBB5E21] mb-4'>
-                        <View>
+                    <View className='flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4'>
+                        <View className='w-4/6 flex-grow'>
                             <Text className='font-boldSFDisplay text-sm text-[#151515]'>
                                 Suitability for Disease Condition
                             </Text>
@@ -114,8 +113,8 @@ const PrescriptionVerificationScreen = () => {
                             </Text>
                         </View>
                     </View>
-                    <View className='flex-row flex-wrap justify-between items-center bg-white pt-2 pb-3 px-[10px] gap-3 rounded border border-[#4CBB5E21] mb-6'>
-                        <View>
+                    <View className='flex-row flex-wrap justify-between items-center bg-white pt-2 pb-3 px-[10px] rounded border border-[#4CBB5E21] mb-6'>
+                        <View className='w-4/6 flex-grow'>
                             <Text className='font-boldSFDisplay text-sm text-[#151515]'>
                                 Suitability Based On:
                             </Text>
