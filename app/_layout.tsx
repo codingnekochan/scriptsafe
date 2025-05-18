@@ -42,13 +42,10 @@ const RootLayout = () => {
         <QueryClientProvider client={queryClient}>
           <Tabs screenOptions={{
             tabBarStyle: {
-              paddingTop: 12,
               backgroundColor: 'white',
               borderWidth: 0,
-              height: 80,
-              paddingBottom: 12,
               paddingLeft: 12,
-              paddingRight: 12
+              paddingRight: 12,
             },
             tabBarActiveTintColor: '#317BFF',
             tabBarLabelPosition: 'below-icon',
@@ -60,7 +57,8 @@ const RootLayout = () => {
               options={{
                 title: 'Home',
                 headerShown: false,
-                tabBarIcon: ({ color = '#828282', size = 25 }) => <HomeIcon w={size} color={color} />
+                tabBarIcon: ({ color = '#828282', size = 25 }) => <HomeIcon w={size} color={color} />,
+                href : ("/(home)")
               }} />
             <Tabs.Screen
               name='(prescriptions)'
@@ -68,7 +66,9 @@ const RootLayout = () => {
                 {
                   title: 'Prescriptions',
                   headerShown: false,
-                  tabBarIcon: ({ color = '#828282', size = 24 }) => <PrescriptionIcon w={size} color={color} />
+                  tabBarIcon: ({ color = '#828282', size = 24 }) => <PrescriptionIcon w={size} color={color} />,
+                  href : ('/(prescriptions)')
+
                 }
               } />
             <Tabs.Screen
@@ -77,21 +77,23 @@ const RootLayout = () => {
                 {
                   title: 'Search',
                   headerShown: false,
-                  tabBarIcon: ({ color = '#828282', size = 23 }) => <SearchIcon w={size} color={color} />
-                }} />
+                  tabBarIcon: ({ color = '#828282', size = 23 }) => <SearchIcon w={size} color={color} />,
+                  href : ('/(search)'),
+                }}
+            />
             <Tabs.Screen
               name='(profile)'
               options={{
                 title: 'My profile',
                 headerShown: false,
-                tabBarIcon: ({ color = '#828282', size = 20 }) => <ProfileIcon w={size} color={color} />
+                tabBarIcon: ({ color = '#828282', size = 20 }) => <ProfileIcon w={size} color={color} />,
+                href :('/(profile)')
               }} />
           </Tabs>
-          <StatusBar />
+          <StatusBar style='dark' />
         </QueryClientProvider>
       </GestureHandlerRootView>
     </SafeAreaProvider>
-
   )
 }
 

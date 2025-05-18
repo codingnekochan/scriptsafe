@@ -1,10 +1,9 @@
-import SearchOverviewScreen from '@/screens/Search/SearchOverviewScreen'
+import MissingContentScreen from '@/screens/MissingContentScreen'
 import React from 'react'
 
 const Search = () => {
     return (
-        <SearchOverviewScreen />
-    )
+        <MissingContentScreen />)
 }
 
 export default Search

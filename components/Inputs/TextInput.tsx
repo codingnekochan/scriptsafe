@@ -10,7 +10,7 @@ const CustomTextInput = (
         keyboardType
     }: any) => {
     return (
-        <View>
+        <View className='mb-6'>
             <Text className='text-sm font-mediumSFDisplay'>{name}</Text>
             <View className='border border-[#D0D5DD] bg-[#F6F6F6] rounded-md mt-1'>
                 <TextInput

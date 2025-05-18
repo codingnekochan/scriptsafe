@@ -1,9 +1,9 @@
-import ProfileOverviewScreen from '@/screens/Profile/ProfileOverviewScreen'
+import MissingContentScreen from '@/screens/MissingContentScreen'
 import React from 'react'
 
 const Profile = () => {
     return (
-        <ProfileOverviewScreen />
+        <MissingContentScreen />
     )
 }
 
