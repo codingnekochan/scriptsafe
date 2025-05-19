@@ -13,14 +13,14 @@ const RecentPrescriptionCard = (
     }: any) => {
     return (
         <View className='bg-white pt-2 px-[10px] pb-[10px] rounded-xl border border-[#FFFFFF21]'>
-            <View className='flex-row items-center gap-1 justify-between'>
+            <View className='flex-row items-center gap-1 justify-start'>
                 <ClockIcon w={14} />
                 <Text className='text-[#5E5E5E] font-regularSFDisplay text-xs leading-[20px]'>
                     {moment(date).format('MMMM DD,YYYY')} - {moment(date).format('LT')
                     }
                 </Text>
             </View>
-            <View className='flex-1 flex-row justify-between items-start gap-2 mt-2'>
+            <View className='flex-row justify-between items-start gap-2 mt-2'>
                 <View className='gap-1'>
                     <View className='flex-row flex-wrap items-center'>
                         <View>
