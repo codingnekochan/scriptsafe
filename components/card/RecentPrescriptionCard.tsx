@@ -36,7 +36,7 @@ const RecentPrescriptionCard = (
                     </View>
                     <Text className='font-boldSFDisplay text-xs leading-[20px]'>{medication}</Text>
                 </View>
-                <View className='flex-1'>
+                <View>
                     {
                         rating === 'safe'
                             ?
