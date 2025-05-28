@@ -97,7 +97,7 @@ export const genderOptions = [
         name: 'Female',
     }
 ]
- export const comorboditiesOption = [
+export const comorbiditiesOption = [
     {
         id: 1,
         label: 'Yes',
@@ -108,7 +108,7 @@ export const genderOptions = [
         label: 'No',
         value: 'no'
     }
- ]
+]
 export const drugFreqency = [
     {
         id: 1,
@@ -144,7 +144,7 @@ export const drugDuration = [
         id: 4,
         name: '4',
     },
-     {
+    {
         id: 5,
         name: '5',
     }

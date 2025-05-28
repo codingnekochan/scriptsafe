@@ -13,6 +13,7 @@ const initalState: object = {
   weight: null,
   gender: null,
   is_pregnant: null,
+  comorbidities: [],
   lifestyles: [],
   conditions: []
 }
@@ -26,7 +27,7 @@ function reducer(state: any, action: any) {
 const StepOne = () => {
   const [state, dispatch] = useReducer(reducer, initalState)
   const [lifestyle, setLifestyle] = useState([])
-  const [combordities, setCombordities] = useState([])
+  const [comorbiditiesList, setcomorbiditiesList] = useState([])
   const [error, setError] = useState({})
   const setPatientBioData = usePrescriptionStore((state: any) => state.setPatientBioData)
 
@@ -41,7 +42,7 @@ const StepOne = () => {
   const fetchPatientData = useQueries({
     queries: [
       {
-        queryKey: ['condition'],
+        queryKey: ['comorbiditiesList'],
         queryFn: getConditions,
       },
       {
@@ -88,17 +89,15 @@ const StepOne = () => {
     handleChange,
     pregnancyOptions,
     lifestyle,
-    combordities,
+    comorbiditiesList,
     handleNext,
-    error
+    error,
   }
   useEffect(() => {
     if (fetchPatientData[0].isSuccess && fetchPatientData[1].isSuccess) {
-      setCombordities(fetchPatientData[0]?.data?.data?.data)
+      setcomorbiditiesList(fetchPatientData[0]?.data?.data?.data)
       setLifestyle(fetchPatientData[1]?.data?.data?.data)
     }
-    console.log(state)
-    console.log(error)
   }, [fetchPatientData])
   return (
     <StepOneScreen {...dataProps} />

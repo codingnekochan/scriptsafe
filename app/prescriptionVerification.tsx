@@ -18,9 +18,7 @@ const PrescriptionVerification = () => {
         verificationResult,
         handleDispense,
     }
-    useEffect(() => {
-        console.log(verificationResult,'result')
-    })
+  
     return (
         <PrescriptionVerificationScreen {...dataProps} />
     )
