@@ -14,13 +14,13 @@ const PrescriptionVerificationScreen = ({
     verificationResult,
     handleDispense,
 }: any) => {
-    const [loading,setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
         const timeout = setTimeout(() => {
             setLoading(false)
         }, 3000);
-        return ()=>clearTimeout(timeout)
-    },[verificationResult])
+        return () => clearTimeout(timeout)
+    }, [verificationResult])
     return (
         <Container px={'px-0'}>
             <View className='px-6'>
@@ -35,15 +35,15 @@ const PrescriptionVerificationScreen = ({
                     <View className='flex-1'>
                         {
                             (verificationResult?.length === 0 || loading) && <View className='flex-1 justify-center items-center'>
-                                <ActivityIndicator size={'large'} color={'#00000014'}/>
+                                <ActivityIndicator size={'large'} color={'#00000014'} />
                             </View>
                         }
                         {
-                           (verificationResult?.length > 0 &&  loading === false)  && verificationResult?.map((result, index) => {
+                            (verificationResult?.length > 0 && loading === false) && verificationResult?.map((result, index) => {
                                 const key = index * 3
                                 return (
-                                    <View key={key} className='flex-1'>
-                                        <View className='mt-8 mb-5 rounded overflow-hidden'>
+                                    <View key={key} className='flex-1 mt-8'>
+                                        {/* <View className='mt-8 mb-5 rounded overflow-hidden'>
                                             <LinearGradient colors={['#317BFF', '#0646A6']} locations={[0.5, 0.9]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} >
                                                 <View className='w-full px-[10px] py-8  flex-row justify-between items-center rounded gap-1'>
                                                     <View className='w-4/6'>
@@ -62,17 +62,18 @@ const PrescriptionVerificationScreen = ({
                                                     </View>
                                                 </View>
                                             </LinearGradient>
-                                        </View>
+                                        </View> */}
                                         <View className='flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4'>
                                             <View className='w-4/6 flex-grow'>
                                                 <Text className='font-boldSFDisplay text-sm text-[#151515]'>
                                                     Duration Check
                                                 </Text>
+
                                                 <Text className='font-regularSFDisplay text-sm text-[#151515]'>
                                                     Prescribed :  {result.duration_check.prescribed}
                                                 </Text>
                                                 <Text className='font-regularSFDisplay text-sm text-[#151515]'>
-                                                    Typical duration for [Indication]: {result.duration_check.typical_duration}
+                                                    Typical duration : {result.duration_check.typical_duration}
                                                 </Text>
                                             </View>
                                             {
@@ -124,12 +125,11 @@ const PrescriptionVerificationScreen = ({
                                                 <Text className='font-regularSFDisplay text-sm text-[#151515]'>
                                                     Interaction pairs: {result.drug_drug_interaction.interaction_pairs}
                                                 </Text>
-                                            </View>
-                                            <View className='border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]'>
-                                                <Text className='font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]'>
-                                                    Increases methotrexate toxicity risk.
+                                                <Text className='font-regularSFDisplay text-sm text-[#151515]'>
+                                                    Severity : {result.drug_drug_interaction.severity}
                                                 </Text>
                                             </View>
+
                                         </View>
                                         <View className='flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4'>
                                             <View className='w-4/6 flex-grow'>
@@ -137,14 +137,14 @@ const PrescriptionVerificationScreen = ({
                                                     Suitability for Disease Condition
                                                 </Text>
                                                 <Text className='font-regularSFDisplay text-sm text-[#151515]'>
-                                                    {result.suitable_for_disease_condition.description}
+                                                    Description : {result.suitable_for_disease_condition.description}
                                                 </Text>
                                             </View>
-                                            <View className='border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]'>
+                                            {/* <View className='border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]'>
                                                 <Text className='font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]'>
                                                     Increases methotrexate toxicity risk.
                                                 </Text>
-                                            </View>
+                                            </View> */}
                                         </View>
                                         <View className='flex-row flex-wrap justify-between items-center bg-white pt-2 pb-3 px-[10px] rounded border border-[#4CBB5E21] mb-6'>
                                             <View className='w-4/6 flex-grow'>
@@ -152,16 +152,14 @@ const PrescriptionVerificationScreen = ({
                                                     Suitability Based On:
                                                 </Text>
                                                 <Text className='font-regularSFDisplay text-sm text-[#151515]'>
-                                                    {
-                                                        result.suitable_based_on.description
-                                                    }
+                                                    Description : {result.suitable_based_on.description}
                                                 </Text>
                                             </View>
-                                            <View className='border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]'>
+                                            {/* <View className='border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]'>
                                                 <Text className='font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]'>
                                                     Increases methotrexate toxicity risk.
                                                 </Text>
-                                            </View>
+                                            </View> */}
                                         </View>
                                     </View>
                                 )
@@ -169,7 +167,7 @@ const PrescriptionVerificationScreen = ({
                             )
                         }
                     </View>
-                 { loading === false &&   <View className='flex-row justify-between gap-4 mb-10'>
+                    {loading === false && <View className='flex-row justify-between gap-4 mb-10'>
                         <View className='flex-1'>
                             <PrimaryButton text={'Optimize'} onPress={() => router.push('/optimizePrescription')} />
                         </View>
