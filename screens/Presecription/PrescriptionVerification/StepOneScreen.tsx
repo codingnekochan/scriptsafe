@@ -29,8 +29,8 @@ const StepOneScreen = ({ pregnancyOptions, handleChange, state, combordities, li
                     }
                     <CustomSelectInput name={"Lifestyle"} options={lifestyle} onSelect={(val: any) => { handleChange('lifestyles', [val.id]) }} />
                     <CustomSelectInput name={"Comorbidities"} options={combordities} onSelect={(val: any) => { handleChange('conditions', [val.id]) }} />
-                    <RadioInput name={"Is the patient on medication for any of the listed comorbidities?"} options={comorboditiesOption} />
-                    <CustomSelectInput name={"Allergies"} />
+                    <RadioInput name={"Is the patient on medication for any of the listed comorbidities?"} options={comorboditiesOption} disabled={true} />
+                    <CustomSelectInput name={"Allergies"} options = {[{id:1,name:'No allergied added yet'}]} disabled={true} />
                 </View>
                 <View className='mt-[10px] mb-6'>
                     <PrimaryButton onPress={handleNext} />

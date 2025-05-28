@@ -4,8 +4,8 @@ import Container from '@/components/common/Container'
 import PageHeader from '@/components/headers/PageHeader'
 import { LinearGradient } from 'expo-linear-gradient'
 import { router } from 'expo-router'
-import React from 'react'
-import { Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { ActivityIndicator, Text, View } from 'react-native'
 import Modal from 'react-native-modal'
 
 const PrescriptionVerificationScreen = ({
@@ -14,7 +14,14 @@ const PrescriptionVerificationScreen = ({
     verificationResult,
     handleDispense,
 }: any) => {
-
+    const [loading,setLoading] = useState(true)
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setLoading(false)
+            console.log(verificationResult,'result')
+        }, 3000);
+        return ()=>clearTimeout(timeout)
+    },[verificationResult])
     return (
         <Container px={'px-0'}>
             <View className='px-6'>
@@ -25,10 +32,15 @@ const PrescriptionVerificationScreen = ({
                 />
             </View>
             <LinearGradient colors={['#E0EDFF', '#E4EFFF', '#E7F0FF']} style={{ flex: 1 }} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}>
-                <View className='px-6'>
+                <View className='px-6 flex-1'>
                     <View className='flex-1'>
                         {
-                            verificationResult?.map((result, index) => {
+                            (verificationResult?.length === 0 || loading) && <View className='flex-1 justify-center items-center'>
+                                <ActivityIndicator size={'large'} color={'#00000014'}/>
+                            </View>
+                        }
+                        {
+                           (verificationResult?.length > 0 &&  loading === false)  && verificationResult?.map((result, index) => {
                                 const key = index * 3
                                 return (
                                     <View key={key} className='flex-1'>
@@ -105,8 +117,8 @@ const PrescriptionVerificationScreen = ({
                                                     </View>
                                             }
                                         </View>
-                                        <View className='flex-row flex-grow flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4'>
-                                            <View className='w-4/6 flex-grow'>
+                                        <View className='flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4 '>
+                                            <View className='w-4/6'>
                                                 <Text className='font-boldSFDisplay text-sm text-[#151515]'>
                                                     Drug-Drug Interactions
                                                 </Text>
@@ -158,14 +170,14 @@ const PrescriptionVerificationScreen = ({
                             )
                         }
                     </View>
-                    <View className='flex-row justify-between gap-4 mb-10'>
+                 { loading === false &&   <View className='flex-row justify-between gap-4 mb-10'>
                         <View className='flex-1'>
                             <PrimaryButton text={'Optimize'} onPress={() => router.push('/optimizePrescription')} />
                         </View>
                         <View className='flex-1'>
                             <OutlineButton text={'Dispense'} onPress={() => setModalOpen(true)} />
                         </View>
-                    </View>
+                    </View>}
                 </View>
             </LinearGradient>
             <Modal isVisible={modalOpen} onBackdropPress={() => { setModalOpen(false) }}>
