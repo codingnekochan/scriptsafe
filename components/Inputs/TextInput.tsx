@@ -7,7 +7,8 @@ const CustomTextInput = (
         value,
         onChangeText,
         placeholder = 'Enter name',
-        keyboardType
+        keyboardType,
+        error,
     }: any) => {
     return (
         <View className='mb-6'>
@@ -22,6 +23,7 @@ const CustomTextInput = (
                     keyboardType={keyboardType}
                 />
             </View>
+            {error && <Text className="mt-2 text-red-500 text-xs">{error}</Text>}
         </View>
     )
 }

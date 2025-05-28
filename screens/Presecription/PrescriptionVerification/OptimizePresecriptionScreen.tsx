@@ -50,7 +50,7 @@ const OptimizePresecriptionScreen = () => {
                             <OutlineButton text={"Add another drug"} prefix={<PlusIcon color='#2E90FA' w={14} />} />
                             <PrimaryButton
                                 text={"Verify Prescription"}
-                                onPress={() => router.push('/(prescriptions)/prescriptionVerification')}
+                                onPress={() => router.push('/prescriptionVerification')}
                             />
                         </View>
                     </View>

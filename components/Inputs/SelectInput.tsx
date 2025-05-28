@@ -5,7 +5,8 @@ import ChevronDownIcon from '../Icons/ChevronDownIcon';
 import ChevronUpIcon from '../Icons/ChevronUpIcon';
 
 const CustomSelectInput = ({
-    options = ['', ''],
+    error,
+    options,
     onSelect, name = 'Select input' }: any) => {
     return (
         <View className='mb-6'>
@@ -24,7 +25,7 @@ const CustomSelectInput = ({
                             {
                                 selectedItem ?
                                     <Text className='text-[#151515] font-regularSFDisplay text-sm'>
-                                        {selectedItem}
+                                        {selectedItem.name}
                                     </Text>
                                     :
                                     <Text className='text-[#98A2B3] font-regularSFDisplay text-sm'>
@@ -38,11 +39,11 @@ const CustomSelectInput = ({
                     renderItem={(item, isSelected) => (
                         <View
                             style={{
-                                backgroundColor: isSelected ? '#F8F8F8' : '#FFF',
+                                backgroundColor: isSelected && '#F8F8F8',
                             }}
                             className='py-2 px-[6px] rounded-md'
                         >
-                            <Text className="text-gray-800">{item}</Text>
+                            <Text className="text-gray-800">{item.name}</Text>
                         </View>
                     )}
                     dropdownStyle={{
@@ -53,6 +54,7 @@ const CustomSelectInput = ({
                     dropdownOverlayColor='transparent'
                 />
             </View>
+            {error && <Text className="mt-2 text-red-500 text-xs">{error}</Text>}
         </View>
     );
 };

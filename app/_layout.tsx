@@ -1,15 +1,13 @@
-import HomeIcon from '@/components/Icons/HomeIcon';
-import PrescriptionIcon from '@/components/Icons/PrescriptionIcon';
-import ProfileIcon from '@/components/Icons/ProfileIcon';
-import SearchIcon from '@/components/Icons/SearchIcon';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
-import { Tabs } from 'expo-router';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
+
 import '../global.css';
 
 SplashScreen.preventAutoHideAsync()
@@ -40,57 +38,17 @@ const RootLayout = () => {
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <QueryClientProvider client={queryClient}>
-          <Tabs screenOptions={{
-            tabBarStyle: {
-              backgroundColor: 'white',
-              borderWidth: 0,
-              paddingLeft: 12,
-              paddingRight: 12,
-            },
-            tabBarActiveTintColor: '#317BFF',
-            tabBarLabelPosition: 'below-icon',
-            tabBarInactiveTintColor: '#828282',
-            tabBarLabelStyle: { fontFamily: 'regularSFDisplay', fontSize: 12 },
-          }}>
-            <Tabs.Screen
-              name='(home)'
-              options={{
-                title: 'Home',
-                headerShown: false,
-                tabBarIcon: ({ color = '#828282', size = 25 }) => <HomeIcon w={size} color={color} />,
-                href : ("/(home)")
-              }} />
-            <Tabs.Screen
-              name='(prescriptions)'
-              options={
-                {
-                  title: 'Prescriptions',
-                  headerShown: false,
-                  tabBarIcon: ({ color = '#828282', size = 24 }) => <PrescriptionIcon w={size} color={color} />,
-                  href : ('/(prescriptions)')
-
-                }
-              } />
-            <Tabs.Screen
-              name='(search)'
-              options={
-                {
-                  title: 'Search',
-                  headerShown: false,
-                  tabBarIcon: ({ color = '#828282', size = 23 }) => <SearchIcon w={size} color={color} />,
-                  href : ('/(search)'),
-                }}
-            />
-            <Tabs.Screen
-              name='(profile)'
-              options={{
-                title: 'My profile',
-                headerShown: false,
-                tabBarIcon: ({ color = '#828282', size = 20 }) => <ProfileIcon w={size} color={color} />,
-                href :('/(profile)')
-              }} />
-          </Tabs>
+          <Stack>
+            <Stack.Screen name='(tabs)' options={{
+              title: 'tabs', headerShown: false
+            }}/>
+            <Stack.Screen name='stepOne' options={{ title: 'Prescription Verification', headerShown: false }} />
+            <Stack.Screen name='stepTwo' options={{ title: 'Prescription Verification', headerShown: false }} />
+            <Stack.Screen name='optimizePrescription' options={{ title: 'Prescription Verification', headerShown: false }} />
+            <Stack.Screen name='prescriptionVerification' options={{ title: 'Prescription Verification', headerShown: false }} />
+          </Stack>
           <StatusBar style='dark' />
+          <Toast />
         </QueryClientProvider>
       </GestureHandlerRootView>
     </SafeAreaProvider>

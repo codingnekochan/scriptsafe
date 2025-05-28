@@ -12,12 +12,10 @@ import { Image, Text, View } from 'react-native'
 
 const PrescriptionOverviewScreen = () => {
     const clickPrescription = usePrescriptionStore((state: any) => state.prescriptionState)
-    // const setClickPrescription = usePrescriptionStore((state:any)=> state.setPrescriptionState)
 
     const handleClick = () => {
-        router.push('/(prescriptions)/stepOne')
+        router.push('/stepOne')
     }
-    console.log("Click Prescription:", clickPrescription);
     return (
         <>
             {!clickPrescription && <LinearGradient colors={['#ECE7F6', '#EBE8F8', '#E4EFFF', '#FAF1E2']} style={{ flex: 1 }} start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} >

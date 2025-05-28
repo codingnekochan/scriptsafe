@@ -9,14 +9,9 @@ import React from 'react';
 import { Text, View } from 'react-native';
 
 const HomeScreen = () => {
-    // const [selected, setSelected] = useState({})
-    // const options: object[] = [{ id: 'val', label: 'val', value: 'val' }, { id: 'val2', label: 'val2', value: 'val2' }]
-    // useEffect(() => {
-    //     console.log(selected)
-    // }, [selected])
 
     const handleClick = () => {
-        router.push('/(prescriptions)/stepOne');
+        router.push('/stepOne');
     }
     return (
         <LinearGradient colors={['#E0EDFF', '#E4EFFF', '#E7F0FF']} style={{ flex: 1 }} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} >

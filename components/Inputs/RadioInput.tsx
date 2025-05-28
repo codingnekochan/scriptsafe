@@ -5,7 +5,8 @@ const RadioInput = (
     {
         options,
         onSelect,
-        selectedId,
+        selectedValue,
+        error,
         name = 'radio'
     }: any) => {
     return (
@@ -13,12 +14,12 @@ const RadioInput = (
             <View>
                 <Text className='text-sm font-mediumSFDisplay'>{name}</Text>
             </View>
-                <View className='py-4 border-b-[0.5px] border-[#97979761] mt-1 flex-row gap-4'>
+            <View className='py-4 border-b-[0.5px] border-[#97979761] mt-1 flex-row gap-4'>
                 {options.map((item: any, index: any) => {
                     return <View key={index} className='flex-row items-center gap-2'>
-                        <TouchableOpacity onPress={()=>onSelect(item)}>
+                        <TouchableOpacity onPress={() => onSelect(item.value)}>
                             <View
-                                className={`h-5 w-5 items-center justify-center rounded-full ${selectedId === item.id ? 'bg-[#317BFF]' : 'bg-[#E4E4E4]'}`}
+                                className={`h-5 w-5 items-center justify-center rounded-full ${selectedValue === item.value ? 'bg-[#317BFF]' : 'bg-[#E4E4E4]'}`}
                             >
                                 <View className='h-[10px] w-[10px] rounded-full bg-[#E4E4E4]' />
                             </View>
@@ -30,6 +31,8 @@ const RadioInput = (
                     </View>
                 })}
             </View>
+            {error && <Text className="mt-2 text-red-500 text-xs">{error}</Text>}
+
         </View>
     )
 }

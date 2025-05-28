@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
 
 const PrimaryButton = (
     {
@@ -11,19 +11,27 @@ const PrimaryButton = (
         className = 'py-4 gap-[10px]',
         text = 'Next',
         borderWidth,
-        borderColor
+        borderColor,
+        loading
     }: any) => {
     return (
         <View>
             <TouchableOpacity onPress={onPress}>
-                <View style={{ backgroundColor: bg,borderWidth:borderWidth,borderColor:borderColor }} className={`${className} flex-row justify-center items-center rounded-xl`}>
-                    {
-                        prefix && <View>
-                            {prefix}
+                {
+                    loading ?
+                        <View style={{ backgroundColor: bg, borderWidth: borderWidth, borderColor: borderColor }} className={`${className} flex-row justify-center items-center rounded-xl`}>
+                            <ActivityIndicator size={'small'} color={'#FFF'} />
                         </View>
-                    }
-                    <Text style={{ color: color, fontSize: fontSize }} className={fontFamily}>{text}</Text>
-                </View>
+                        :
+                        <View style={{ backgroundColor: bg, borderWidth: borderWidth, borderColor: borderColor }} className={`${className} flex-row justify-center items-center rounded-xl`}>
+                            {
+                                prefix && <View>
+                                    {prefix}
+                                </View>
+                            }
+                            <Text style={{ color: color, fontSize: fontSize }} className={fontFamily}>{text}</Text>
+                        </View>
+                }
             </TouchableOpacity>
         </View>
     )
