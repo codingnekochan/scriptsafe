@@ -5,7 +5,6 @@ import DrugFormItem from '@/components/common/DrugFormItem'
 import PageHeader from '@/components/headers/PageHeader'
 import PlusIcon from '@/components/Icons/PlusIcon'
 import CustomSelectInput from '@/components/Inputs/SelectInput'
-import CustomTextInput from '@/components/Inputs/TextInput'
 import { router } from 'expo-router'
 import React from 'react'
 import { Text, View } from 'react-native'
@@ -21,7 +20,6 @@ const StepTwoScreen = ({
     conditionsList,
     medicationsList,
     setCondition }: any) => {
-    console.log('conditions list', conditionError)
     return (
         <Container>
             <PageHeader backIcon backIconOnPress={() => router.back()} />
@@ -29,7 +27,6 @@ const StepTwoScreen = ({
                 Enter prescription information
             </Text>
             <View className='mt-6'>
-                <CustomSelectInput name='What is the diagnosis or condition being treated?' options={conditionsList} onSelect={(val: any) => setCondition(val.id)} error={conditionError} />
             </View>
             {
                 drugList.map((_: object, index: number) => {
@@ -40,6 +37,7 @@ const StepTwoScreen = ({
                             handleChange={handleChange}
                             error={errors[index] || {}}
                             medicationsList = {medicationsList}
+                            conditionsList={conditionsList}
                         />
                     )
                 })
