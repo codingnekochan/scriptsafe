@@ -1,10 +1,10 @@
 import OutlineButton from '@/components/buttons/OutlineButton'
 import PrimaryButton from '@/components/buttons/PrimaryButton'
+import DrugCard from '@/components/card/DrugCard'
 import Container from '@/components/common/Container'
 import DrugFormItem from '@/components/common/DrugFormItem'
 import PageHeader from '@/components/headers/PageHeader'
 import PlusIcon from '@/components/Icons/PlusIcon'
-import CustomSelectInput from '@/components/Inputs/SelectInput'
 import { router } from 'expo-router'
 import React from 'react'
 import { Text, View } from 'react-native'
@@ -31,14 +31,22 @@ const StepTwoScreen = ({
             {
                 drugList.map((_: object, index: number) => {
                     return (
-                        <DrugFormItem
-                            key={index}
-                            index={index}
-                            handleChange={handleChange}
-                            error={errors[index] || {}}
-                            medicationsList = {medicationsList}
-                            conditionsList={conditionsList}
-                        />
+                        <View                                 key={index}
+>
+                            {
+                                index < drugList.length-1 && <DrugCard/>
+                            }
+                            {
+                             index === drugList.length-1 &&   <DrugFormItem
+                                index={index}
+                                handleChange={handleChange}
+                                error={errors[index] || {}}
+                                medicationsList = {medicationsList}
+                                conditionsList={conditionsList}
+                            />
+                            }
+                        </View>
+                       
                     )
                 })
             }
