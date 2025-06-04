@@ -28,9 +28,6 @@ interface DrugForm {
 const StepTwo = () => {
   const [index, setIndex] = useState(0);
   const [errors, setErrors] = useState<any[]>([]);
-  const [conditionsList, setConditionsList] = useState([]);
-  const [medicationsList, setMedicationsList] = useState([]);
-
   const initialState: DrugForm = useMemo(
     () => ({
       id: 0,
@@ -39,17 +36,17 @@ const StepTwo = () => {
       drug_id: null,
       drug_name: null,
       dosage_value: 0,
-      dosage_unit: 'mg',
+      dosage_unit: null,
       frequency_value: 0,
-      frequency_unit: 'x daily',
+      frequency_unit: null,
       duration_value: 0,
-      duration_unit: 'Days',
+      duration_unit: null,
     }),
     []
   );
 
-  const [drugList, setDrugList] = useState<DrugForm[]>([]);
   const [drugForm, setDrugForm] = useState<DrugForm>(initialState);
+  const [drugList, setDrugList] = useState<DrugForm[]>([]);
 
   // Zustand store hooks
   const patientBioData = usePrescriptionStore(
@@ -60,6 +57,19 @@ const StepTwo = () => {
   );
   const setDrugFormState = usePrescriptionStore(
     (state: any) => state.setDrugFormState
+  );
+  const medicationsList = usePrescriptionStore(
+    (state: any) => state.medicationsList
+  );
+  const setMedicationsList = usePrescriptionStore(
+    (state: any) => state.setMedicationsList
+  );
+  const conditionsList = usePrescriptionStore(
+    (state: any) => state.conditionsList
+  );
+
+  const setConditionsList = usePrescriptionStore(
+    (state: any) => state.setConditionsList
   );
   const setVerificationResult = usePrescriptionStore(
     (state: any) => state.setVerificationResult
@@ -100,7 +110,8 @@ const StepTwo = () => {
     mutationFn: (data: any) => verifyPrescription(data),
     onSuccess: (data: any) => {
       setVerificationResult(data?.verification_results);
-      savePrescription()
+      savePrescription();
+      setDrugFormState(null);
       router.push("/prescriptionVerification");
     },
     onError(error: any) {
@@ -224,72 +235,82 @@ const StepTwo = () => {
 
   // Handle form submission
   const handleNext = useCallback(() => {
-    if (!validateAllDrugs()) {
-      Toast.show({
-        type: "error",
-        text1: "Validation failed",
-        text2: "Please fill in all required fields",
-      });
-      return;
+    let finalDrugList;
+    if (drugList.length === 0) {
+      if (!validateCurrentDrug()) {
+        Toast.show({
+          type: "error",
+          text1: "Validation failed",
+          text2: "Please fill in all required fields",
+        });
+        return;
+      } else {
+        finalDrugList = [drugForm];
+      }
+    } else {
+      if (!validateAllDrugs() && !validateCurrentDrug()) {
+        Toast.show({
+          type: "error",
+          text1: "Validation failed",
+          text2: "Please fill in all required fields",
+        });
+        return;
+      } else {
+        finalDrugList = [...drugList, drugForm].map((drug) => ({
+          condition_id: drug.condition_id,
+          drug_id: drug.drug_id,
+          dosage_value: drug.dosage_value,
+          dosage_unit: drug.dosage_unit,
+          frequency_value: drug.frequency_value,
+          frequency_unit: drug.frequency_unit,
+          duration_value: drug.duration_value,
+          duration_unit: drug.duration_unit,
+        }));
+      }
     }
-
-    const finalDrugList = drugList.map((drug) => ({
-      condition_id: drug.condition_id,
-      drug_id: drug.drug_id,
-      dosage_value: drug.dosage_value,
-      dosage_unit: drug.dosage_unit,
-      frequency_value: drug.frequency_value,
-      frequency_unit: drug.frequency_unit,
-      duration_value: drug.duration_value,
-      duration_unit: drug.duration_unit,
-    }));
 
     const payload = {
       ...patientBioData,
       drugs: finalDrugList,
     };
-
     verify.mutate(payload);
-    setPatientDrugList(finalDrugList);
+    setPatientDrugList([...drugList, drugForm]);
   }, [drugList, patientBioData, verify, setPatientDrugList, validateAllDrugs]);
 
   // Save prescription to database
-  const savePrescription = useCallback(
-    async () => {
-      try {
-        const conditions = drugList
-          .map((drug) => drug.condition_name)
-          .filter(Boolean);
-        const medications = drugList.map((drug) => ({
-          drug_name: drug.drug_name,
-          dosage_value: drug.dosage_value,
-          dosage_unit: drug.dosage_unit,
-          duration_unit: drug.duration_unit,
-          duration_value: drug.duration_value,
-          frequency_unit: drug.frequency_unit,
-          frequency_value: drug.frequency_value,
-        }));
+  const savePrescription = useCallback(async () => {
+    try {
+      const conditions = drugList
+        .map((drug) => drug.condition_name)
+        .filter(Boolean);
+      const medications = drugList.map((drug) => ({
+        drug_name: drug.drug_name,
+        dosage_value: drug.dosage_value,
+        dosage_unit: drug.dosage_unit,
+        duration_unit: drug.duration_unit,
+        duration_value: drug.duration_value,
+        frequency_unit: drug.frequency_unit,
+        frequency_value: drug.frequency_value,
+      }));
 
-        const data = {
-          name: patientBioData.patient_name,
-          conditions,
-          medications,
-        };
+      const data = {
+        name: patientBioData.patient_name,
+        conditions,
+        medications,
+      };
 
-        console.log(data, "data to be saved to db");
-        const res = await recentDB.addPatient(data);
-        return res;
-      } catch (error) {
-        console.error("Error saving prescription:", error);
-        Toast.show({
-          type: "error",
-          text1: "Save failed",
-          text2: "Could not save prescription",
-        });
-      }
-    },
-    [drugList, patientBioData]
-  );
+      console.log(data, "data to be saved to db");
+      const res = await recentDB.addPatient(data);
+      return res;
+    } catch (error) {
+      console.error("Error saving prescription:", error);
+      Toast.show({
+        type: "error",
+        text1: "Save failed",
+        text2: "Could not save prescription",
+      });
+    }
+  }, [drugList, patientBioData]);
 
   // Delete a drug from the list
   const deleteDrug = useCallback(
@@ -326,7 +347,6 @@ const StepTwo = () => {
     if (!validateCurrentDrug()) {
       return;
     }
-
     const updatedList = [...drugList];
     updatedList[index] = { ...drugForm };
     setDrugList(updatedList);
@@ -340,7 +360,6 @@ const StepTwo = () => {
     setDrugFormState,
     validateCurrentDrug,
   ]);
-
   // Props for the screen component
   const dataProps = {
     addAnotherDrug,

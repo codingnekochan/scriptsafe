@@ -70,7 +70,7 @@ const StepTwoScreen: React.FC<StepTwoScreenProps> = ({
 
       <ScrollView className="flex-1 mt-6" showsVerticalScrollIndicator={false}>
         {/* Display added drugs */}
-        {drugList.length > 0 && (
+        {drugList.length >= 1 && (
           <View className="mb-6">
             {drugList.map((item, drugIndex) => (
               <View key={`drug-${drugIndex}`} className="mb-4">
@@ -93,7 +93,7 @@ const StepTwoScreen: React.FC<StepTwoScreenProps> = ({
         )}
         {/* Drug form */}
         <View className="mb-6">
-          <DrugFormItem
+        <DrugFormItem
             drugForm={drugForm}
             handleChange={handleChange}
             error={currentError}
@@ -122,18 +122,15 @@ const StepTwoScreen: React.FC<StepTwoScreenProps> = ({
             />
           )}
         </View>
-      </ScrollView>
-
-      {/* Bottom action - Verify Prescription */}
-      {drugList.length > 0 && !isEditMode && (
-        <View className="border-t border-gray-200 pt-4 pb-6">
+        {/* Bottom action - Verify Prescription */}
+     {  !isEditMode && <View className="pt-4 pb-6">
           <PrimaryButton
             text="Verify Prescription"
             onPress={handleNext}
             loading={loading}
           />
-        </View>
-      )}
+        </View>}
+      </ScrollView>
     </Container>
   );
 };

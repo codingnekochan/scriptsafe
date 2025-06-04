@@ -11,6 +11,7 @@ const CustomSelectInput = ({
 	onSelect,
 	name = "Select input",
 	placeholder,
+	value,
 }: any) => {
 	return (
 		<View className="mb-6">
@@ -26,6 +27,7 @@ const CustomSelectInput = ({
 			<View className="border border-[#D0D5DD] rounded-md bg-[#F6F6F6] justify-center">
 				<SelectDropdown
 					disabled={disabled}
+					defaultValue={null}
 					data={options}
 					onSelect={(selectedItem) => onSelect(selectedItem)}
 					buttonStyle={{
@@ -33,7 +35,7 @@ const CustomSelectInput = ({
 					}}
 					renderButton={(selectedItem, isOpened) => (
 						<View className="flex-row items-center justify-between p-4">
-							{selectedItem !== null ? (
+							{selectedItem && value  ? (
 								<Text className="text-[#151515] font-regularSFDisplay text-sm">
 									{selectedItem.label || selectedItem.name}
 								</Text>

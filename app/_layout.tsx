@@ -46,6 +46,8 @@ const RootLayout = () => {
             <Stack.Screen name='stepTwo' options={{ title: 'Prescription Verification', headerShown: false }} />
             <Stack.Screen name='optimizePrescription' options={{ title: 'Prescription Verification', headerShown: false }} />
             <Stack.Screen name='prescriptionVerification' options={{ title: 'Prescription Verification', headerShown: false }} />
+            <Stack.Screen name='editDrug' options={{ title: 'Edit Drug', headerShown: false }} />
+
           </Stack>
           <StatusBar style='dark' />
           <Toast />

@@ -2,14 +2,26 @@ import OutlineButton from "@/components/buttons/OutlineButton";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import DrugCard from "@/components/card/DrugCard";
 import Container from "@/components/common/Container";
+import DrugFormItem from "@/components/common/DrugFormItem";
 import PageHeader from "@/components/headers/PageHeader";
 import PlusIcon from "@/components/Icons/PlusIcon";
 import { router } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
 
-const OptimizePresecriptionScreen = ({ patientDrugList,deleteDrug }:any) => {
-  console.log(patientDrugList,'patient drug list')
+const OptimizePresecriptionScreen = ({
+  patientDrugList,
+  deleteDrug,
+  addNewDrug,
+  verifyDrug,
+  drugForm,
+  conditionsList,
+  medicationsList,
+  handleChange,
+  error,
+  editDrug,
+  loading,
+}: any) => {
   return (
     <Container>
       <PageHeader
@@ -22,7 +34,7 @@ const OptimizePresecriptionScreen = ({ patientDrugList,deleteDrug }:any) => {
           Enter prescription information
         </Text>
         <View className="mt-5">
-          {patientDrugList?.map((item:any, index:number) => {
+          {patientDrugList?.map((item: any, index: number) => {
             return (
               <View className="mb-6" key={index}>
                 <DrugCard
@@ -35,19 +47,31 @@ const OptimizePresecriptionScreen = ({ patientDrugList,deleteDrug }:any) => {
                   drugFrequencyUnit={item.frequency_unit}
                   drugFrequencyValue={item.frequency_value}
                   deleteDrug={deleteDrug}
+                  editDrug={editDrug}
                 />
               </View>
             );
           })}
           <View>
+            <DrugFormItem
+              drugForm={drugForm}
+              handleChange={handleChange}
+              medicationsList={medicationsList}
+              conditionsList={conditionsList}
+              error={error}
+            />
+          </View>
+          <View>
             <View className="mt-20 gap-10 mb-20">
               <OutlineButton
                 text={"Add another drug"}
+                onPress={addNewDrug}
                 prefix={<PlusIcon color="#2E90FA" w={14} />}
               />
               <PrimaryButton
                 text={"Verify Prescription"}
-                onPress={() => router.push("/prescriptionVerification")}
+                onPress={verifyDrug}
+                loading={loading}
               />
             </View>
           </View>
