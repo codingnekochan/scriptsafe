@@ -33,7 +33,7 @@ const OptimizePresecriptionScreen = ({
         <Text className="text-center font-regularSFDisplay text-base tracking-wide text-[#474747]">
           Enter prescription information
         </Text>
-        <View className="mt-5">
+        <View className="mt-5 flex-1">
           {patientDrugList?.map((item: any, index: number) => {
             return (
               <View className="mb-6" key={index}>
@@ -52,7 +52,7 @@ const OptimizePresecriptionScreen = ({
               </View>
             );
           })}
-          <View>
+          <View className="flex-1">
             <DrugFormItem
               drugForm={drugForm}
               handleChange={handleChange}
