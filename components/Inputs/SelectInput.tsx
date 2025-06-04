@@ -33,7 +33,7 @@ const CustomSelectInput = ({
 					}}
 					renderButton={(selectedItem, isOpened) => (
 						<View className="flex-row items-center justify-between p-4">
-							{selectedItem ? (
+							{selectedItem !== null ? (
 								<Text className="text-[#151515] font-regularSFDisplay text-sm">
 									{selectedItem.label || selectedItem.name}
 								</Text>

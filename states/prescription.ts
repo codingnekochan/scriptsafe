@@ -5,6 +5,7 @@ export const usePrescriptionStore = create((set) => ({
   patientMedications: [],
   verificationResult: null,
   patientDrugList: null,
+  drugFormState : null,
   setPrescriptionState: (data: any) => set(() => ({ prescriptionState: data })),
   setPatientBioData: (data: any) => set(() => ({ patientBioData: data })),
   setPatientMedications: (data: any) =>
@@ -12,4 +13,5 @@ export const usePrescriptionStore = create((set) => ({
   setVerificationResult: (data: any) =>
     set(() => ({ verificationResult: data })),
   setPatientDrugList: (data: any) => set(() => ({ patientDrugList: data })),
+  setDrugFormState : (data:any)=>set(()=>({drugFormState :data}))
 }));

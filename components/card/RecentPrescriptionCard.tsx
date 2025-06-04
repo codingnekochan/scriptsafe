@@ -67,7 +67,7 @@ const RecentPrescriptionCard = ({
             })}
           </View>
         </View>
-        <View>
+        {/* <View>
           {rating === "safe" ? (
             <View className="bg-[#4CBB5E14] border border-[#4CBB5E] w-[56px] rounded-[14px] items-center py-[2px]">
               <Text className="text-[#4CBB5E] text-[10px] text-nowrap font-mediumSFDisplay leading-[20px]">
@@ -87,7 +87,7 @@ const RecentPrescriptionCard = ({
               </Text>
             </View>
           )}
-        </View>
+        </View> */}
       </View>
       <View className="mt-1">
         <TouchableOpacity onPress={showMore}>
