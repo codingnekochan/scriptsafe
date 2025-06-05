@@ -110,7 +110,6 @@ const StepTwo = () => {
     mutationFn: (data: any) => verifyPrescription(data),
     onSuccess: (data: any) => {
       setVerificationResult(data?.verification_results);
-      savePrescription();
       setDrugFormState(null);
       router.push("/prescriptionVerification");
     },
@@ -245,9 +244,19 @@ const StepTwo = () => {
         });
         return;
       } else {
-        finalDrugList = [drugForm];
+        finalDrugList = [drugForm].map((drug) => ({
+          condition_id: drug.condition_id,
+          drug_id: drug.drug_id,
+          dosage_value: drug.dosage_value,
+          dosage_unit: drug.dosage_unit,
+          frequency_value: drug.frequency_value,
+          frequency_unit: drug.frequency_unit,
+          duration_value: drug.duration_value,
+          duration_unit: drug.duration_unit,
+        }));;
+        setPatientDrugList([drugForm]);
       }
-    } else {
+    } else if (drugForm.condition_id !== null || drugForm.drug_id !== null) {
       if (!validateAllDrugs() && !validateCurrentDrug()) {
         Toast.show({
           type: "error",
@@ -267,39 +276,70 @@ const StepTwo = () => {
           duration_unit: drug.duration_unit,
         }));
       }
+      setPatientDrugList([...drugList, drugForm]);
+    } else {
+      finalDrugList = [...drugList].map((drug) => ({
+        condition_id: drug.condition_id,
+        drug_id: drug.drug_id,
+        dosage_value: drug.dosage_value,
+        dosage_unit: drug.dosage_unit,
+        frequency_value: drug.frequency_value,
+        frequency_unit: drug.frequency_unit,
+        duration_value: drug.duration_value,
+        duration_unit: drug.duration_unit,
+      }));
+      setPatientDrugList([...drugList]);
     }
 
+    savePrescription();
     const payload = {
       ...patientBioData,
       drugs: finalDrugList,
     };
+    console.log(payload, "=======pAY");
     verify.mutate(payload);
-    setPatientDrugList([...drugList, drugForm]);
   }, [drugList, patientBioData, verify, setPatientDrugList, validateAllDrugs]);
 
   // Save prescription to database
-  const savePrescription = useCallback(async () => {
+  const savePrescription = async () => {
+    console.log("drug List =====", drugList);
+    let conditions;
+    let medications;
     try {
-      const conditions = drugList
-        .map((drug) => drug.condition_name)
-        .filter(Boolean);
-      const medications = drugList.map((drug) => ({
-        drug_name: drug.drug_name,
-        dosage_value: drug.dosage_value,
-        dosage_unit: drug.dosage_unit,
-        duration_unit: drug.duration_unit,
-        duration_value: drug.duration_value,
-        frequency_unit: drug.frequency_unit,
-        frequency_value: drug.frequency_value,
-      }));
-
+      if (drugList.length > 0) {
+        conditions = drugList
+          .map((drug) => drug.condition_name)
+          .filter(Boolean);
+        medications = drugList.map((drug) => ({
+          drug_name: drug.drug_name,
+          dosage_value: drug.dosage_value,
+          dosage_unit: drug.dosage_unit,
+          duration_unit: drug.duration_unit,
+          duration_value: drug.duration_value,
+          frequency_unit: drug.frequency_unit,
+          frequency_value: drug.frequency_value,
+        }));
+      } else {
+        conditions = [drugForm]
+          .map((drug) => drug.condition_name)
+          .filter(Boolean);
+        medications = [drugForm].map((drug) => ({
+          drug_name: drug.drug_name,
+          dosage_value: drug.dosage_value,
+          dosage_unit: drug.dosage_unit,
+          duration_unit: drug.duration_unit,
+          duration_value: drug.duration_value,
+          frequency_unit: drug.frequency_unit,
+          frequency_value: drug.frequency_value,
+        }));
+      }
       const data = {
         name: patientBioData.patient_name,
         conditions,
         medications,
       };
-
       console.log(data, "data to be saved to db");
+
       const res = await recentDB.addPatient(data);
       return res;
     } catch (error) {
@@ -310,7 +350,7 @@ const StepTwo = () => {
         text2: "Could not save prescription",
       });
     }
-  }, [drugList, patientBioData]);
+  };
 
   // Delete a drug from the list
   const deleteDrug = useCallback(

@@ -123,7 +123,7 @@ const StepTwoScreen: React.FC<StepTwoScreenProps> = ({
           )}
         </View>
         {/* Bottom action - Verify Prescription */}
-     {  !isEditMode && <View className="pt-4 pb-6">
+     {  !isEditMode && <View className="pt-4 pb-16">
           <PrimaryButton
             text="Verify Prescription"
             onPress={handleNext}

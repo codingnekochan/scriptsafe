@@ -4,7 +4,7 @@ import { recentDB } from "@/services/db";
 import { usePrescriptionStore } from "@/states/prescription";
 import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
 const initialState = {
@@ -49,7 +49,7 @@ const OptimizePresecription = () => {
   const setDrugFormState = usePrescriptionStore(
     (state: any) => state.setDrugFormState
   );
-  const savePrescription = useCallback(async () => {
+  const savePrescription = async () => {
     try {
       const conditions = patientDrugList
         .map((drug) => drug.condition_name)
@@ -81,7 +81,7 @@ const OptimizePresecription = () => {
         text2: "Could not save prescription",
       });
     }
-  }, [patientDrugList, patientBioData]);
+  }
   // Verification mutation
   const verify = useMutation({
     mutationFn: (data: any) => verifyPrescription(data),
@@ -150,7 +150,7 @@ const OptimizePresecription = () => {
 
   const verifyDrug = () => {
     let finalDrugList
-    if(drugFormState === 'add'){
+    if(drugForm.condition_id !== null || drugForm.drug_id !== null){
       if (!validateDrugForm()) {
         Toast.show({
           type: "error",
@@ -169,6 +169,8 @@ const OptimizePresecription = () => {
         duration_value: drug.duration_value,
         duration_unit: drug.duration_unit,
       }));
+      setPatientDrugList([...patientDrugList,drugForm]);
+
     }
     else {
       finalDrugList = [...patientDrugList].map((drug) => ({
@@ -181,14 +183,16 @@ const OptimizePresecription = () => {
         duration_value: drug.duration_value,
         duration_unit: drug.duration_unit,
       }));
+      setPatientDrugList([...patientDrugList]);
     }
     
     const payLoad = {
       ...patientBioData,
       drugs: finalDrugList,
     };
+    console.log('payLoad=====',payLoad)
+    console.log('patient drug list =====', patientDrugList)
     verify.mutate(payLoad);
-    setPatientDrugList([...patientDrugList, drugForm]);
 
   };
   const addNewDrug = () => {
@@ -213,6 +217,9 @@ const OptimizePresecription = () => {
     // Update drug form
     setDrugForm((prev) => ({ ...prev, [key]: value }));
   }, []);
+  useEffect(()=>{
+    setDrugFormState(null)
+  },[])
   const dataProps = {
     patientDrugList,
     deleteDrug,
