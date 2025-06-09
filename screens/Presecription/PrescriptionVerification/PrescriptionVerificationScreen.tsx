@@ -18,7 +18,6 @@ const PrescriptionVerificationScreen = ({
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			setLoading(false);
-			console.log("verificationResult", verificationResult);
 		}, 3000);
 		return () => clearTimeout(timeout);
 	}, [verificationResult]);

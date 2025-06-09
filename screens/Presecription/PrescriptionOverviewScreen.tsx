@@ -2,25 +2,15 @@ import AddButton from "@/components/buttons/AddButton";
 import RecentPrescriptionCard from "@/components/card/RecentPrescriptionCard";
 import Container from "@/components/common/Container";
 import MainPageHeader from "@/components/headers/MainPageHeader";
-import { recentPrescriptions } from "@/constants/contentProps";
 import { img_prescription_empty } from "@/constants/images";
-import { usePrescriptionStore } from "@/states/prescription";
 import { LinearGradient } from "expo-linear-gradient";
-import { router } from "expo-router";
 import React from "react";
 import { Image, Text, View } from "react-native";
 
-const PrescriptionOverviewScreen = () => {
-	const clickPrescription = usePrescriptionStore(
-		(state: any) => state.prescriptionState
-	);
-
-	const handleClick = () => {
-		router.push("/stepOne");
-	};
+const PrescriptionOverviewScreen = ({ recentsList, handleClick }: any) => {
 	return (
 		<>
-			{!clickPrescription && (
+			{recentsList.length === 0 && (
 				<LinearGradient
 					colors={["#ECE7F6", "#EBE8F8", "#E4EFFF", "#FAF1E2"]}
 					style={{ flex: 1 }}
@@ -48,7 +38,7 @@ const PrescriptionOverviewScreen = () => {
 					</Container>
 				</LinearGradient>
 			)}
-			{clickPrescription && (
+			{recentsList.length > 0 && (
 				<Container bg={"white"} px="px-0">
 					<LinearGradient
 						colors={["#E0EDFF", "#E4EFFF", "#E7F0FF"]}
@@ -71,15 +61,14 @@ const PrescriptionOverviewScreen = () => {
 									Recent Prescriptions
 								</Text>
 								<View className="gap-5 mt-4">
-									{recentPrescriptions.map((prescription, index) => {
+									{recentsList.map((prescription, index) => {
 										return (
 											<RecentPrescriptionCard
 												key={index}
-												name={prescription.patient_name}
-												illness={prescription.patient_illness}
-												medication={prescription.patient_medication}
-												date={prescription.created_at}
-												rating={prescription.rating}
+												name={prescription?.name}
+												illness={prescription?.conditions}
+												medication={prescription?.medications}
+												date={prescription?.date_created}
 											/>
 										);
 									})}
