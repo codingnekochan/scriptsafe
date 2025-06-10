@@ -93,7 +93,7 @@ const StepTwoScreen: React.FC<StepTwoScreenProps> = ({
         )}
         {/* Drug form */}
         <View className="mb-6">
-        <DrugFormItem
+          <DrugFormItem
             drugForm={drugForm}
             handleChange={handleChange}
             error={currentError}
@@ -123,13 +123,15 @@ const StepTwoScreen: React.FC<StepTwoScreenProps> = ({
           )}
         </View>
         {/* Bottom action - Verify Prescription */}
-     {  !isEditMode && <View className="pt-4 pb-16">
-          <PrimaryButton
-            text="Verify Prescription"
-            onPress={handleNext}
-            loading={loading}
-          />
-        </View>}
+        {!isEditMode && (
+          <View className="pt-4 pb-16">
+            <PrimaryButton
+              text="Verify Prescription"
+              onPress={handleNext}
+              loading={loading}
+            />
+          </View>
+        )}
       </ScrollView>
     </Container>
   );

@@ -14,7 +14,6 @@ const Prescriptions = () => {
     router.push("/stepOne");
   };
 
- 
   useEffect(() => {
     handleAllPatients();
   }, []);
@@ -22,7 +21,6 @@ const Prescriptions = () => {
   const dataProps = {
     recentsList,
     handleClick,
-
   };
   return <PrescriptionOverviewScreen {...dataProps} />;
 };

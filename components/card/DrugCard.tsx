@@ -39,11 +39,11 @@ const DrugCard: React.FC<DrugCardProps> = ({
   };
 
   return (
-    <View 
+    <View
       className={`flex-row border rounded justify-between items-start px-[10px] py-2 ${
-        isEditing 
-          ? 'border-[#2E90FA] bg-[#F0F9FF]' 
-          : 'border-[#42090921] bg-white'
+        isEditing
+          ? "border-[#2E90FA] bg-[#F0F9FF]"
+          : "border-[#42090921] bg-white"
       }`}
     >
       <View className="gap-2 flex-1 mr-2">
@@ -51,28 +51,37 @@ const DrugCard: React.FC<DrugCardProps> = ({
           Drug Name: {drugName || "Not selected"}
         </Text>
         <Text className="font-regularSFDisplay text-xs text-[#151515]">
-          Dosage: {drugDosageValue > 0 ? `${drugDosageValue} ${drugDosageUnit || ''}` : "Not set"}
+          Dosage:{" "}
+          {drugDosageValue > 0
+            ? `${drugDosageValue} ${drugDosageUnit || ""}`
+            : "Not set"}
         </Text>
         <Text className="font-regularSFDisplay text-xs text-[#151515]">
-          Frequency: {drugFrequencyValue > 0 ? `${drugFrequencyValue} ${drugFrequencyUnit || ''}` : "Not set"}
+          Frequency:{" "}
+          {drugFrequencyValue > 0
+            ? `${drugFrequencyValue} ${drugFrequencyUnit || ""}`
+            : "Not set"}
         </Text>
         <Text className="font-regularSFDisplay text-xs text-[#151515]">
-          Duration: {drugDurationValue > 0 ? `${drugDurationValue} ${drugDurationUnit || ''}` : "Not set"}
+          Duration:{" "}
+          {drugDurationValue > 0
+            ? `${drugDurationValue} ${drugDurationUnit || ""}`
+            : "Not set"}
         </Text>
       </View>
       <View className="flex-row gap-2 items-center">
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={handleDelete}
           className="p-1"
-          accessibilityLabel={`Delete drug ${drugName || 'unnamed'}`}
+          accessibilityLabel={`Delete drug ${drugName || "unnamed"}`}
           accessibilityRole="button"
         >
           <DeleteIcon w={20} />
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={handleEdit}
           className="p-1"
-          accessibilityLabel={`Edit drug ${drugName || 'unnamed'}`}
+          accessibilityLabel={`Edit drug ${drugName || "unnamed"}`}
           accessibilityRole="button"
         >
           <EditIcon w={18} />

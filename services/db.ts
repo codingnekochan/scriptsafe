@@ -10,13 +10,15 @@ class prescriptionDB {
   // Initialize/Create database
   async initDatabase() {
     if (this.initialized) return;
-    
+
     try {
       // Use the correct expo-sqlite API
       this.db = await SQLite.openDatabaseAsync("simple_medical_records.db");
       await this.createTables();
       this.initialized = true;
-      console.log("Simplified medical records database initialized successfully");
+      console.log(
+        "Simplified medical records database initialized successfully"
+      );
     } catch (error) {
       console.error("Database initialization error:", error);
       throw error;
@@ -54,7 +56,7 @@ class prescriptionDB {
   // Add new patient with conditions and medications as JSON strings
   async addPatient(data) {
     await this.ensureInitialized();
-    
+
     const insertQuery = `
       INSERT INTO patients (name, conditions, medications) 
       VALUES (?, ?, ?);
@@ -81,7 +83,7 @@ class prescriptionDB {
   // Get all patients with parsed data
   async getAllPatients() {
     await this.ensureInitialized();
-    
+
     const selectQuery = "SELECT * FROM patients ORDER BY date_created DESC;";
 
     try {
@@ -117,4 +119,4 @@ class prescriptionDB {
   }
 }
 
-export const recentDB = new prescriptionDB()
+export const recentDB = new prescriptionDB();

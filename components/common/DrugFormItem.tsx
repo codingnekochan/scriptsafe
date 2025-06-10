@@ -38,14 +38,18 @@ const DrugFormItem: React.FC<DrugFormItemProps> = ({
   conditionsList,
 }) => {
   // Helper function to find selected option for select inputs
-  const findSelectedOption = (list: any[], value: any, field: 'id' | 'value') => {
+  const findSelectedOption = (
+    list: any[],
+    value: any,
+    field: "id" | "value"
+  ) => {
     if (!value) return null;
-    return list.find(item => item[field] === value) || null;
+    return list.find((item) => item[field] === value) || null;
   };
 
   // Helper function to convert numeric string input
   const handleNumericChange = (field: keyof DrugForm, value: string) => {
-    const numericValue = value === '' ? 0 : parseFloat(value) || 0;
+    const numericValue = value === "" ? 0 : parseFloat(value) || 0;
     handleChange(field, numericValue);
   };
 
@@ -55,7 +59,11 @@ const DrugFormItem: React.FC<DrugFormItemProps> = ({
         <CustomSelectInput
           name="What is the diagnosis or condition being treated?"
           options={conditionsList}
-          value={findSelectedOption(conditionsList, drugForm.condition_id, 'id')}
+          value={findSelectedOption(
+            conditionsList,
+            drugForm.condition_id,
+            "id"
+          )}
           onSelect={(val: any) => {
             handleChange("condition_id", val.id);
             handleChange("condition_name", val.name || val.label || val.value);
@@ -67,7 +75,7 @@ const DrugFormItem: React.FC<DrugFormItemProps> = ({
           name="Drug Name"
           placeholder="Enter"
           options={medicationsList}
-          value={findSelectedOption(medicationsList, drugForm.drug_id, 'id')}
+          value={findSelectedOption(medicationsList, drugForm.drug_id, "id")}
           onSelect={(val: any) => {
             handleChange("drug_id", val.id);
             handleChange("drug_name", val.label || val.name || val.value);
@@ -80,8 +88,14 @@ const DrugFormItem: React.FC<DrugFormItemProps> = ({
             <CustomTextInput
               name="Dosage"
               placeholder="0"
-              value={drugForm.dosage_value > 0 ? drugForm.dosage_value.toString() : ''}
-              onChangeText={(val: string) => handleNumericChange("dosage_value", val)}
+              value={
+                drugForm.dosage_value > 0
+                  ? drugForm.dosage_value.toString()
+                  : ""
+              }
+              onChangeText={(val: string) =>
+                handleNumericChange("dosage_value", val)
+              }
               error={error.dosage}
               keyboardType="numeric"
             />
@@ -91,7 +105,11 @@ const DrugFormItem: React.FC<DrugFormItemProps> = ({
               name="Dosage Unit"
               options={dosageUnit}
               placeholder="mcg"
-              value={findSelectedOption(dosageUnit, drugForm.dosage_unit, 'value')}
+              value={findSelectedOption(
+                dosageUnit,
+                drugForm.dosage_unit,
+                "value"
+              )}
               onSelect={(val: any) => handleChange("dosage_unit", val.value)}
               error={error.dosageUnit}
             />
@@ -103,8 +121,14 @@ const DrugFormItem: React.FC<DrugFormItemProps> = ({
             <CustomTextInput
               name="Frequency"
               placeholder="0"
-              value={drugForm.frequency_value > 0 ? drugForm.frequency_value.toString() : ''}
-              onChangeText={(val: string) => handleNumericChange("frequency_value", val)}
+              value={
+                drugForm.frequency_value > 0
+                  ? drugForm.frequency_value.toString()
+                  : ""
+              }
+              onChangeText={(val: string) =>
+                handleNumericChange("frequency_value", val)
+              }
               error={error.frequency}
               keyboardType="numeric"
             />
@@ -114,7 +138,11 @@ const DrugFormItem: React.FC<DrugFormItemProps> = ({
               name="Frequency Unit"
               placeholder="x daily"
               options={frequencyUnit}
-              value={findSelectedOption(frequencyUnit, drugForm.frequency_unit, 'value')}
+              value={findSelectedOption(
+                frequencyUnit,
+                drugForm.frequency_unit,
+                "value"
+              )}
               onSelect={(val: any) => handleChange("frequency_unit", val.value)}
               error={error.frequencyUnit}
             />
@@ -126,8 +154,14 @@ const DrugFormItem: React.FC<DrugFormItemProps> = ({
             <CustomTextInput
               name="Duration"
               placeholder="0"
-              value={drugForm.duration_value > 0 ? drugForm.duration_value.toString() : ''}
-              onChangeText={(val: string) => handleNumericChange("duration_value", val)}
+              value={
+                drugForm.duration_value > 0
+                  ? drugForm.duration_value.toString()
+                  : ""
+              }
+              onChangeText={(val: string) =>
+                handleNumericChange("duration_value", val)
+              }
               error={error.duration}
               keyboardType="numeric"
             />
@@ -137,7 +171,11 @@ const DrugFormItem: React.FC<DrugFormItemProps> = ({
               name="Duration Unit"
               placeholder="Days"
               options={durationUnit}
-              value={findSelectedOption(durationUnit, drugForm.duration_unit, 'value')}
+              value={findSelectedOption(
+                durationUnit,
+                drugForm.duration_unit,
+                "value"
+              )}
               onSelect={(val: any) => handleChange("duration_unit", val.value)}
               error={error.durationUnit}
             />

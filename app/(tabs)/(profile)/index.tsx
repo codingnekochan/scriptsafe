@@ -1,10 +1,8 @@
-import MissingContentScreen from '@/screens/MissingContentScreen'
-import React from 'react'
+import MissingContentScreen from "@/screens/MissingContentScreen";
+import React from "react";
 
 const Profile = () => {
-    return (
-        <MissingContentScreen />
-    )
-}
+  return <MissingContentScreen />;
+};
 
-export default Profile
+export default Profile;
