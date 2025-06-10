@@ -63,9 +63,9 @@ const CustomMultiSelectInput = ({
         onPress={() => setIsDropdownOpen(!isDropdownOpen)}
       >
         <View className="flex-row justify-between items-center">
-          {selectedItems.length > 0 ? (
-            <Text className="text-[#333333] font-regularSFDisplay text-sm">
-              {selectedItems.map((i) => {
+          <View className="flex-row items-center flex-wrap w-5/6 gap-px">
+            {selectedItems.length > 0 ? (
+              selectedItems.map((i) => {
                 return (
                   <TouchableOpacity key={i.name} onPress={() => removeItem(i)}>
                     <View className="gap-1 flex-row mr-2 items-center rounded-md px-[10px] py-[6px] mb-1 bg-[#E9E9E9]">
@@ -76,13 +76,13 @@ const CustomMultiSelectInput = ({
                     </View>
                   </TouchableOpacity>
                 );
-              })}
-            </Text>
-          ) : (
-            <Text className="text-[#98A2B3] font-regularSFDisplay text-sm">
-              Select
-            </Text>
-          )}
+              })
+            ) : (
+              <Text className="text-[#98A2B3] font-regularSFDisplay text-sm">
+                Select
+              </Text>
+            )}
+          </View>
           <View>
             {isDropdownOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
           </View>

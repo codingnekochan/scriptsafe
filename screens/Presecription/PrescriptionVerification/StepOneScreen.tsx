@@ -122,11 +122,11 @@ const StepOneScreen = ({
               }}
             />
           )}
-          <CustomSelectInput
+          {/* <CustomSelectInput
             name={"Allergies"}
             options={[{ id: 1, name: "No allergied added yet" }]}
             disabled={true}
-          />
+          /> */}
         </View>
         <View className="mt-[10px] mb-16">
           <PrimaryButton onPress={handleNext} />
