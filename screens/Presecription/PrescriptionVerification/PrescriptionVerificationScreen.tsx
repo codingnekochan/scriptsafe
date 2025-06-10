@@ -63,7 +63,9 @@ const PrescriptionVerificationScreen = ({
                         <Text className="font-regularSFDisplay text-[15px] text-[#FFFFFF]">
                           {formatResponse(
                             verificationResult.recommendations.messages
-                              .map((message: string, i: number) => message)
+                              .map(
+                                (message: string, i: number) => `• ${message}`
+                              )
                               .join(" ")
                           )}
                         </Text>
