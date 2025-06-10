@@ -23,6 +23,7 @@ const StepOneScreen = ({
   handleNext,
   ageCategory,
   error,
+  comorbiditiesMedicationList
 }: any) => {
   return (
     <Container>

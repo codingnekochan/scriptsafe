@@ -13,6 +13,7 @@ const PrescriptionVerificationScreen = ({
 	setModalOpen,
 	verificationResult,
 	handleDispense,
+	formatResponse,
 }: any) => {
 	const [loading, setLoading] = useState(true);
 	useEffect(() => {
@@ -60,50 +61,55 @@ const PrescriptionVerificationScreen = ({
 													Recommendations :
 												</Text>
 												<Text className="font-regularSFDisplay text-[15px] text-[#FFFFFF]">
-													{verificationResult.recommendations.messages
-														.slice(0, 2)
-														.map((message: string, i: number) => message)
-														.join(" ")}
+													{formatResponse(
+														verificationResult.recommendations.messages
+															.map((message: string, i: number) => message)
+															.join(" ")
+													)}
 												</Text>
 											</View>
 										</View>
 									</LinearGradient>
 								</View>
 								{verificationResult.duration_check.length > 0 &&
-									verificationResult.duration_check.map((result, index) => {
-										return (
-											<View
-												key={index}
-												className="flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4"
-											>
-												<View className="w-4/6 flex-grow">
-													<Text className="font-boldSFDisplay text-sm text-[#151515]">
-														Duration Check
-													</Text>
+									verificationResult.duration_check.map(
+										(result: any, index: number) => {
+											return (
+												<View
+													key={index}
+													className="flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4"
+												>
+													<View className="w-4/6 mr-px">
+														<Text className="font-boldSFDisplay text-sm text-[#151515]">
+															Duration Check
+														</Text>
 
-													<Text className="font-regularSFDisplay text-sm text-[#151515]">
-														Prescribed : {result.prescribed_duration}
-													</Text>
-													<Text className="font-regularSFDisplay text-sm text-[#151515]">
-														Typical duration : {result.typical_duration_range}
-													</Text>
+														<Text className="font-regularSFDisplay text-sm text-[#151515]">
+															Prescribed : {result.prescribed_duration}
+														</Text>
+														<Text className="font-regularSFDisplay text-sm text-[#151515]">
+															Typical duration : {result.typical_duration_range}
+														</Text>
+													</View>
+													{result.status === "Overdose" ||
+													result.status === "Contraindicated" ||
+													result.status === "Warning" ? (
+														<View className="border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]">
+															<Text className="font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]">
+																❌ Overdose
+															</Text>
+														</View>
+													) : (
+														<View className="bg-white border border-[#4CBB5E] px-[10px] rounded-[14px]">
+															<Text className="text-[#4CBB5E] text-[10px] leading-[20px]">
+																✅ Safe
+															</Text>
+														</View>
+													)}
 												</View>
-												{result.status === "Overdose" ? (
-													<View className="border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]">
-														<Text className="font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]">
-															❌ Overdose
-														</Text>
-													</View>
-												) : (
-													<View className="bg-white border border-[#4CBB5E] px-[10px] rounded-[14px]">
-														<Text className="text-[#4CBB5E] text-[10px] leading-[20px]">
-															✅ Safe
-														</Text>
-													</View>
-												)}
-											</View>
-										);
-									})}
+											);
+										}
+									)}
 								{verificationResult.dosage_check.length > 0 &&
 									verificationResult.dosage_check.map((result, index) => {
 										return (
@@ -111,7 +117,7 @@ const PrescriptionVerificationScreen = ({
 												key={index}
 												className="flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4"
 											>
-												<View className="w-4/6 flex-grow">
+												<View className="w-4/6 mr-px">
 													<Text className="font-boldSFDisplay text-sm text-[#151515]">
 														Dosage Check
 													</Text>
@@ -123,7 +129,8 @@ const PrescriptionVerificationScreen = ({
 													</Text>
 												</View>
 												{result.status === "Overdose" ||
-												result.status === "Contraindicated" ? (
+												result.status === "Contraindicated" ||
+												result.status === "Warning" ? (
 													<View className="border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]">
 														<Text className="font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]">
 															❌ {result.status}
@@ -147,7 +154,7 @@ const PrescriptionVerificationScreen = ({
 													key={index}
 													className="flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4 "
 												>
-													<View className="w-4/6">
+													<View className="w-4/6 mr-px">
 														<Text className="font-boldSFDisplay text-sm text-[#151515]">
 															Drug-Drug Interactions
 														</Text>
@@ -171,7 +178,7 @@ const PrescriptionVerificationScreen = ({
 													key={index}
 													className="flex-row flex-wrap justify-between items-center bg-white py-2 px-[10px] rounded border border-[#4CBB5E21] mb-4"
 												>
-													<View className="w-4/6 flex-grow">
+													<View className="w-4/6 mr-px">
 														<Text className="font-boldSFDisplay text-sm text-[#151515]">
 															Suitability for Disease Condition
 														</Text>
@@ -179,19 +186,30 @@ const PrescriptionVerificationScreen = ({
 															Description : {result.message}
 														</Text>
 													</View>
-													<View className="border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]">
-														<Text className="font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]">
-															{result.status}
-														</Text>
-													</View>
+													{result.status === "Contraindicated" ||
+													result.status === "Overdose" ||
+													result.status === "Unsafe" ||
+													result.status === "Warning" ? (
+														<View className="border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]">
+															<Text className="font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]">
+																❌ {result.status}
+															</Text>
+														</View>
+													) : (
+														<View className="bg-white border border-[#4CBB5E] px-[10px] rounded-[14px]">
+															<Text className="text-[#4CBB5E] text-[10px] leading-[20px] font-regularSFDisplay">
+																✅ {result.status}
+															</Text>
+														</View>
+													)}
 												</View>
 											);
 										}
 									)}
 								<View className="flex-row flex-wrap justify-between items-center bg-white pt-2 pb-3 px-[10px] rounded border border-[#4CBB5E21] mb-6">
-									<View className="w-4/6 flex-grow">
+									<View className="w-4/6 mr-px">
 										<Text className="font-boldSFDisplay text-sm text-[#151515]">
-											Suitability Based On:{" Age"}
+											Suitability Based On: {"Age"}
 										</Text>
 										<Text className="font-regularSFDisplay text-sm text-[#151515]">
 											Description :{" "}
@@ -204,7 +222,9 @@ const PrescriptionVerificationScreen = ({
 									{verificationResult.suitability_based_on_patient_profile.age
 										.status === "Overdose" ||
 									verificationResult.suitability_based_on_patient_profile.age
-										.status === "Contraindicated" ? (
+										.status === "Contraindicated" ||
+									verificationResult.suitability_based_on_patient_profile.age
+										.status === "Warning" ? (
 										<View className="border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]">
 											<Text className="font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]">
 												❌{" "}
@@ -227,9 +247,9 @@ const PrescriptionVerificationScreen = ({
 									)}
 								</View>
 								<View className="flex-row flex-wrap justify-between items-center bg-white pt-2 pb-3 px-[10px] rounded border border-[#4CBB5E21] mb-6">
-									<View className="w-4/6 flex-grow">
+									<View className="w-4/6 mr-px">
 										<Text className="font-boldSFDisplay text-sm text-[#151515]">
-											Suitability Based On:{"Weight "}
+											Suitability Based On: {"Weight"}
 										</Text>
 										<Text className="font-regularSFDisplay text-sm text-[#151515]">
 											Description :{" "}
@@ -242,7 +262,9 @@ const PrescriptionVerificationScreen = ({
 									{verificationResult.suitability_based_on_patient_profile
 										.weight.status === "Overdose" ||
 									verificationResult.suitability_based_on_patient_profile.weight
-										.status === "Contraindicated" ? (
+										.status === "Contraindicated" ||
+									verificationResult.suitability_based_on_patient_profile.weight
+										.status === "Warning" ? (
 										<View className="border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]">
 											<Text className="font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]">
 												❌{" "}
@@ -265,9 +287,9 @@ const PrescriptionVerificationScreen = ({
 									)}
 								</View>
 								<View className="flex-row flex-wrap justify-between items-center bg-white pt-2 pb-3 px-[10px] rounded border border-[#4CBB5E21] mb-6">
-									<View className="w-4/6 flex-grow">
+									<View className="w-4/6 mr-px">
 										<Text className="font-boldSFDisplay text-sm text-[#151515]">
-											Suitability Based On:{"Gender "}
+											Suitability Based On: {"Gender"}
 										</Text>
 										<Text className="font-regularSFDisplay text-sm text-[#151515]">
 											Description :{" "}
@@ -280,7 +302,9 @@ const PrescriptionVerificationScreen = ({
 									{verificationResult.suitability_based_on_patient_profile
 										.gender.status === "Overdose" ||
 									verificationResult.suitability_based_on_patient_profile.gender
-										.status === "Contraindicated" ? (
+										.status === "Contraindicated" ||
+									verificationResult.suitability_based_on_patient_profile.gender
+										.status === "Warning" ? (
 										<View className="border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]">
 											<Text className="font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]">
 												❌{" "}
@@ -303,9 +327,9 @@ const PrescriptionVerificationScreen = ({
 									)}
 								</View>
 								<View className="flex-row flex-wrap justify-between items-center bg-white pt-2 pb-3 px-[10px] rounded border border-[#4CBB5E21] mb-6">
-									<View className="w-4/6 flex-grow">
+									<View className="w-4/6 mr-px">
 										<Text className="font-boldSFDisplay text-sm text-[#151515]">
-											Suitability Based On:{" Pregnancy Status"}
+											Suitability Based On: {"Pregnancy Status"}
 										</Text>
 										<Text className="font-regularSFDisplay text-sm text-[#151515]">
 											Description :{" "}
@@ -318,7 +342,9 @@ const PrescriptionVerificationScreen = ({
 									{verificationResult.suitability_based_on_patient_profile
 										.pregnancy_status.status === "Overdose" ||
 									verificationResult.suitability_based_on_patient_profile
-										.pregnancy_status.status === "Contraindicated" ? (
+										.pregnancy_status.status === "Contraindicated" ||
+									verificationResult.suitability_based_on_patient_profile
+										.pregnancy_status.status === "Warning" ? (
 										<View className="border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]">
 											<Text className="font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]">
 												❌{" "}
@@ -343,7 +369,7 @@ const PrescriptionVerificationScreen = ({
 									)}
 								</View>
 								<View className="flex-row flex-wrap justify-between items-center bg-white pt-2 pb-3 px-[10px] rounded border border-[#4CBB5E21] mb-6">
-									<View className="w-4/6 flex-grow">
+									<View className="w-4/6 mr-px">
 										<Text className="font-boldSFDisplay text-sm text-[#151515]">
 											Suitability Based On: {"Lifestyle"}
 										</Text>
@@ -358,7 +384,9 @@ const PrescriptionVerificationScreen = ({
 									{verificationResult.suitability_based_on_patient_profile
 										.lifestyle.status === "Overdose" ||
 									verificationResult.suitability_based_on_patient_profile
-										.lifestyle.status === "Contraindicated" ? (
+										.lifestyle.status === "Contraindicated" ||
+									verificationResult.suitability_based_on_patient_profile
+										.lifestyle.status === "Warning" ? (
 										<View className="border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]">
 											<Text className="font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]">
 												❌{" "}
@@ -385,7 +413,7 @@ const PrescriptionVerificationScreen = ({
 								{verificationResult.suitability_based_on_patient_profile
 									.comorbidities.length > 0 && (
 									<View className="  bg-white pt-2 pb-3 px-[10px] rounded border border-[#4CBB5E21] mb-6">
-										<View className="w-4/6 flex-grow">
+										<View className="w-4/6 mr-px">
 											<Text className="font-boldSFDisplay text-sm text-[#151515]">
 												Suitability Based On: {"Comorbidities"}
 											</Text>
@@ -406,7 +434,9 @@ const PrescriptionVerificationScreen = ({
 															</Text>
 														</View>
 														{result.status === "Overdose" ||
-														result.status === "Contraindicated" ? (
+														result.status === "Contraindicated" ||
+														result.status === "Warning" ||
+														result.status === "Unsafe" ? (
 															<View className="border px-[10px] py-[2px] rounded-[14px] bg-[#BB4C4C14] border-[#BB4C4C]">
 																<Text className="font-regularSFDisplay text-sm text-[#BB4C4C] leading-[20px]">
 																	❌ {result.status}

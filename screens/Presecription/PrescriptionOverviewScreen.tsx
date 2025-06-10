@@ -61,7 +61,7 @@ const PrescriptionOverviewScreen = ({ recentsList, handleClick }: any) => {
 									Recent Prescriptions
 								</Text>
 								<View className="gap-5 mt-4">
-									{recentsList.map((prescription, index) => {
+									{recentsList.map((prescription :any, index: any)  => {
 										return (
 											<RecentPrescriptionCard
 												key={index}

@@ -27,27 +27,29 @@ const CustomSelectInput = ({
 			<View className="border border-[#D0D5DD] rounded-md bg-[#F6F6F6] justify-center">
 				<SelectDropdown
 					disabled={disabled}
-					defaultValue={null}
+					defaultValue={value || null}
 					data={options}
 					onSelect={(selectedItem) => onSelect(selectedItem)}
 					buttonStyle={{
 						width: "100%",
 					}}
-					renderButton={(selectedItem, isOpened) => (
-						<View className="flex-row items-center justify-between p-4">
-							{selectedItem && value  ? (
-								<Text className="text-[#151515] font-regularSFDisplay text-sm">
-									{selectedItem.label || selectedItem.name}
-								</Text>
-							) : (
-								<Text className="text-[#98A2B3] font-regularSFDisplay text-sm">
-									{placeholder || "Select"}
-								</Text>
-							)}
+					renderButton={(selectedItem, isOpened) => {
+						return (
+							<View className="flex-row items-center justify-between p-4">
+								{selectedItem && value ? (
+									<Text className="text-[#151515] font-regularSFDisplay text-sm">
+										{selectedItem.label || selectedItem.name}
+									</Text>
+								) : (
+									<Text className="text-[#98A2B3] font-regularSFDisplay text-sm">
+										{placeholder || "Select"}
+									</Text>
+								)}
 
-							{isOpened ? <ChevronUpIcon /> : <ChevronDownIcon />}
-						</View>
-					)}
+								{isOpened ? <ChevronUpIcon /> : <ChevronDownIcon />}
+							</View>
+						);
+					}}
 					renderItem={(item, isSelected) => {
 						return (
 							<View

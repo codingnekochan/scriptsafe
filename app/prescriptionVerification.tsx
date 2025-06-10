@@ -11,7 +11,14 @@ const PrescriptionVerification = () => {
   const verificationResult = usePrescriptionStore(
     (state: any) => state.verificationResult
   );
-
+  const formatResponse = (text: string): string => {
+		return text
+			.split(".")
+			.map((sentence) => sentence.trim())
+			.filter((sentence) => sentence.length > 0)
+			.map((sentence) => sentence + ".")
+			.join("\n");
+	};
   const handleDispense = () => {
     // setClickPrescription(true);
     router.replace("/(tabs)/(prescriptions)");
@@ -21,6 +28,7 @@ const PrescriptionVerification = () => {
     setModalOpen,
     verificationResult,
     handleDispense,
+    formatResponse
   };
 
   return <PrescriptionVerificationScreen {...dataProps} />;
