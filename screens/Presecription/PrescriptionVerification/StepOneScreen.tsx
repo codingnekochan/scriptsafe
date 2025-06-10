@@ -23,7 +23,7 @@ const StepOneScreen = ({
   handleNext,
   ageCategory,
   error,
-  comorbiditiesMedicationList
+  comorbiditiesMedicationList,
 }: any) => {
   return (
     <Container>
@@ -72,7 +72,7 @@ const StepOneScreen = ({
             name={"Patient's Gender"}
             options={genderOptions}
             onSelect={(val: any) => handleChange("patient_gender", val.name)}
-			value = {state.patient_gender}
+            value={state.patient_gender}
             error={error.gender}
           />
           {state.patient_gender === "Female" && (
@@ -116,18 +116,7 @@ const StepOneScreen = ({
           {state.on_medication_for_comorbidities && (
             <CustomMultiSelectInput
               name={"Medication for Comorbidities"}
-              options={[
-                {
-                  id: 1,
-                  name: "Metformin",
-                  dosage: "500mg",
-                },
-                {
-                  id: 2,
-                  name: "Amlodipine",
-                  dosage: "5mg",
-                },
-              ]}
+              options={comorbiditiesMedicationList}
               onSelected={(val: any) => {
                 handleChange("medications_for_comorbidities", val);
               }}
